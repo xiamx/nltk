@@ -81,7 +81,7 @@ from nltk.data import load
 def _pos_tag(tokens, tagset, tagger):
     tagged_tokens = tagger.tag(tokens)
     if tagset:
-        tagged_tokens = [(token, map_tag('en-ptb', tagset, tag)) for (token, tag) in tagged_tokens]
+        tagged_tokens = [(token, map_tag('en-ptb', tagset, tag)) for (token, tag, score) in tagged_tokens]
     return tagged_tokens
 
 def pos_tag(tokens, tagset=None):

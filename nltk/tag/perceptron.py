@@ -55,7 +55,9 @@ class AveragedPerceptron(object):
             for label, weight in weights.items():
                 scores[label] += value * weight
         # Do a secondary alphabetic sort, for stability
-        return max(self.classes, key=lambda label: (scores[label], label))
+        print(scores)
+        max_score_label = max(self.classes, key=lambda label: (scores[label], label))
+        return max_score_label, scores[max_score_label]
 
     def update(self, truth, guess, features):
         '''Update the feature weights.'''
@@ -152,10 +154,11 @@ class PerceptronTagger(TaggerI):
         context = self.START + [self.normalize(w) for w in tokens] + self.END
         for i, word in enumerate(tokens):
             tag = self.tagdict.get(word)
+            score = 0
             if not tag:
                 features = self._get_features(i, word, context, prev, prev2)
-                tag = self.model.predict(features)
-            output.append((word, tag))
+                (tag, score) = self.model.predict(features)
+            output.append((word, tag, score))
             prev2 = prev
             prev = tag
 
