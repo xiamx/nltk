@@ -55,7 +55,6 @@ class AveragedPerceptron(object):
             for label, weight in weights.items():
                 scores[label] += value * weight
         # Do a secondary alphabetic sort, for stability
-        print(scores)
         max_score_label = max(self.classes, key=lambda label: (scores[label], label))
         return max_score_label, scores[max_score_label]
 
